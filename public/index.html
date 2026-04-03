@@ -7,6 +7,31 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1180421604226097');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1180421604226097&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    <script>
+      window.pixelId = "68acf599969578f4da9cc080";
+      var a = document.createElement("script");
+      a.setAttribute("async", "");
+      a.setAttribute("defer", "");
+      a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+      document.head.appendChild(a);
+    </script>
     <!-- QRCode.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
@@ -288,7 +313,7 @@
         .price-current {
             font-size: 26px;
             font-weight: 700;
-            color: var(--green);
+            color: var(--text-dark);
         }
 
         .price-installments {
@@ -302,14 +327,18 @@
             background-color: var(--green);
             color: var(--white);
             border: none;
-            padding: 16px 20px;
-            border-radius: 10px;
-            font-size: 15px;
+            padding: 14px 20px;
+            border-radius: 4px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
         }
 
         .btn-add-cart:hover {
@@ -318,6 +347,12 @@
 
         .btn-add-cart:active {
             transform: scale(0.98);
+        }
+
+        .btn-add-cart svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--white);
         }
 
         /* Cart Drawer */
@@ -1989,10 +2024,10 @@
                 clearInterval(autoSlideIntervals[productId]);
             }
             
-            // Auto-slide every 3 seconds
-            autoSlideIntervals[productId] = setInterval(() => {
-                nextSlide(productId);
-            }, 3000);
+// Auto-slide every 6 seconds
+    autoSlideIntervals[productId] = setInterval(() => {
+        nextSlide(productId);
+    }, 6000);
         }
 
         // Stop auto-slide for a specific carousel
@@ -2058,8 +2093,7 @@
                             <span class="price-original">R$ ${product.priceOriginal.toFixed(2).replace('.', ',')}</span>
                             <span class="price-current">R$ ${product.priceCurrent.toFixed(2).replace('.', ',')}</span>
                         </div>
-                        <p class="price-installments">${product.installments}</p>
-                        <button class="btn-add-cart" onclick="addToCart(${product.id})">Adicionar ao Carrinho</button>
+<button class="btn-add-cart" onclick="addToCart(${product.id})">ADICIONAR AO CARRINHO <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></button>
                     </div>
                 </div>
             `}).join('');
