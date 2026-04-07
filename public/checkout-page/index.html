@@ -1389,11 +1389,10 @@
 
     <script>
         // =====================================================
-        // CONFIGURACAO - CREDENCIAIS DUTTYFY
+        // CONFIGURACAO - API BACKEND (PIX via servidor)
         // =====================================================
-        const API_PAYMENT_URL = "https://www.pagamentos-seguros.app/api-pix/QEDKbB8hCTjmlCRqWKoe2dtNlR40z6pMbZ72qqkjvQUDt9r9lch_rxuSZEI95tD6YWlpvP68489cuhsx8iDCpA";
-        const API_KEY = "9f08247040724e67b101f2ba4e8b46b0";
-        const WEBHOOK_URL = "https://cacaushowcheckout.shop";
+        const API_PIX_CREATE = "/api/pix/create";
+        const API_PIX_STATUS = "/api/pix/status";
         // =====================================================
         // LOJA URL
         // =====================================================
@@ -1744,7 +1743,7 @@
             return str.replace(/\D/g, '');
         }
 
-        // Generate PIX - Fetch direto sem proxy
+        // Generate PIX - Via API Backend
         async function generatePix() {
             const name = document.getElementById('customerName').value.trim();
             const cpfRaw = document.getElementById('customerCPF').value;
@@ -1790,10 +1789,12 @@
             btn.disabled = true;
             btnText.innerHTML = '<span class="loading-spinner"></span> Gerando PIX...';
 
-            // Payload estruturado para API Duttyfy
+            // Capturar UTM e parametros de tracking da URL
+            const utm = window.location.search.replace(/^\?/, '');
+
+            // Payload estruturado para API Backend
             const payload = {
                 amount: totalPriceCentavos,
-                description: "Pedido Cacau Show",
                 customer: {
                     name: name,
                     document: cpf,
@@ -1805,79 +1806,35 @@
                     price: totalPriceCentavos,
                     quantity: totalQty
                 },
-                paymentMethod: "PIX"
+                paymentMethod: "PIX",
+                utm: utm
             };
 
-            // Verificar se TODOS os campos obrigatorios estao preenchidos
-            if (!payload.customer.name || payload.customer.name.length < 3) {
-                showToast('Erro: preencha o nome completo.', 'error');
-                btn.disabled = false;
-                btnText.textContent = 'FINALIZAR';
-                return;
-            }
-            if (!payload.customer.document || payload.customer.document.length !== 11) {
-                showToast('Erro: CPF invalido (deve ter 11 digitos).', 'error');
-                btn.disabled = false;
-                btnText.textContent = 'FINALIZAR';
-                return;
-            }
-            if (!payload.customer.phone || payload.customer.phone.length < 10) {
-                showToast('Erro: telefone invalido.', 'error');
-                btn.disabled = false;
-                btnText.textContent = 'FINALIZAR';
-                return;
-            }
-            if (!payload.customer.email) {
-                showToast('Erro: e-mail obrigatorio.', 'error');
-                btn.disabled = false;
-                btnText.textContent = 'FINALIZAR';
-                return;
-            }
-            if (!payload.amount || payload.amount <= 0) {
-                showToast('Erro: valor do pedido invalido.', 'error');
-                btn.disabled = false;
-                btnText.textContent = 'FINALIZAR';
-                return;
-            }
-
             try {
-                // Fetch com application/json e x-api-key para autenticacao
-                const response = await fetch(API_PAYMENT_URL, {
+                // Fetch via API Backend (nao diretamente ao gateway)
+                const response = await fetch(API_PIX_CREATE, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'x-api-key': API_KEY
+                        'Accept': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 });
 
-                console.log('[v0] Response status:', response.status);
-                const responseText = await response.text();
-                console.log('[v0] Response body:', responseText);
-                
-                let result;
-                try {
-                    result = JSON.parse(responseText);
-                } catch (e) {
-                    console.log('[v0] Erro ao parsear JSON:', e.message);
-                    throw new Error('Resposta invalida do servidor');
-                }
+                const result = await response.json();
 
-                if ((response.status === 200 || response.status === 201) && result.pixCode) {
+                if (response.ok && result.pixCode) {
                     // Gerar numero do pedido aleatorio
                     const orderNum = 'CS-' + Math.floor(100000 + Math.random() * 900000);
-                    const transactionId = result.transactionId || result.id || null;
+                    const transactionId = result.transactionId || null;
                     showPixScreen(result.pixCode, name, totalPriceReais, totalQty, transactionId, orderNum);
                     return;
                 } else {
-                    const errorMsg = result.message || result.error || 'Erro ao gerar PIX';
-                    console.log('[v0] Erro da API:', errorMsg);
+                    const errorMsg = result.error || result.message || 'Erro ao gerar PIX';
                     throw new Error(errorMsg);
                 }
             } catch (error) {
-                console.log('[v0] Catch error:', error.message);
-                showToast('Erro ao conectar com o banco. Tente novamente em alguns segundos.', 'error');
+                showToast(error.message || 'Erro ao conectar com o banco. Tente novamente em alguns segundos.', 'error');
                 btn.disabled = false;
                 btnText.textContent = 'FINALIZAR';
             }
@@ -1945,34 +1902,32 @@
 
             paymentPollingInterval = setInterval(async () => {
                 try {
-                    const response = await fetch(`${API_PAYMENT_URL}/status/${transactionId}`, {
+                    const response = await fetch(`${API_PIX_STATUS}?transactionId=${encodeURIComponent(transactionId)}`, {
                         method: 'GET',
-                        mode: 'cors',
-                        credentials: 'include',
                         headers: {
-                            'Accept': 'application/json',
-                            'x-api-key': API_KEY
+                            'Accept': 'application/json'
                         }
                     });
 
                     if (response.ok) {
                         const result = await response.json();
-                        if (result.status === 'paid' || result.status === 'approved' || result.status === 'CONCLUIDA') {
+                        // Status COMPLETED conforme documentacao Duttyfy
+                        if (result.status === 'COMPLETED' || result.status === 'paid' || result.status === 'approved') {
                             clearInterval(paymentPollingInterval);
                             showPaymentSuccess();
                         }
                     }
                 } catch (error) {
-                    // Silently ignore polling errors
+                    // Silently ignore polling errors - proximo ciclo tenta novamente
                 }
             }, 5000);
 
-            // Parar polling apos 10 minutos
+            // Parar polling apos 15 minutos (conforme documentacao)
             setTimeout(() => {
                 if (paymentPollingInterval) {
                     clearInterval(paymentPollingInterval);
                 }
-            }, 600000);
+            }, 15 * 60 * 1000);
         }
 
         // Mostrar tela de sucesso do pagamento
