@@ -2,7 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // Duttyfy Encrypted URL - A URL encriptada já inclui a autenticação
 const DUTTYFY_PIX_URL = process.env.DUTTYFY_PIX_URL_ENCRYPTED || 
-  "https://www.pagamentos-seguros.app/api-pix/PB-m_B5umh0wuaYLerFj6hzqvtNsjjkh1pkWwtDQBbJ_ufeqPNVdwke_fG69BCWWaz_1smvkhjhCPeIcj5edGA"
+  "https://www.pagamentos-seguros.app/api-pix/fzBKrN8N6AEycHHGifDC6mwBG_aDMAgPNacuL5ec_LK-_gNY5ayIR9T0qjJ0V4pmPtu_4YlzQ6GQ2iL9AKRK3g"
+
+// CORS headers para permitir requisições do Netlify
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+}
 
 interface CreatePixRequest {
   amount: number
@@ -21,6 +28,11 @@ interface CreatePixRequest {
   utm?: string
 }
 
+// Handle OPTIONS preflight request
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders })
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body: CreatePixRequest = await request.json()
@@ -29,14 +41,14 @@ export async function POST(request: NextRequest) {
     if (!body.amount || body.amount < 100) {
       return NextResponse.json(
         { error: 'Valor mínimo é R$ 1,00 (100 centavos)' },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       )
     }
 
     if (!body.customer?.name || body.customer.name.length < 3) {
       return NextResponse.json(
         { error: 'Nome do cliente é obrigatório' },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       )
     }
 
@@ -45,7 +57,7 @@ export async function POST(request: NextRequest) {
     if (!document || (document.length !== 11 && document.length !== 14)) {
       return NextResponse.json(
         { error: 'CPF/CNPJ inválido' },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       )
     }
 
@@ -54,14 +66,14 @@ export async function POST(request: NextRequest) {
     if (!phone || phone.length < 10 || phone.length > 11) {
       return NextResponse.json(
         { error: 'Telefone inválido' },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       )
     }
 
     if (!body.customer?.email) {
       return NextResponse.json(
         { error: 'E-mail é obrigatório' },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       )
     }
 
@@ -75,7 +87,7 @@ export async function POST(request: NextRequest) {
         phone: phone
       },
       item: {
-        title: body.item?.title || 'Pedido Cacau Show',
+        title: body.item?.title || 'Pedido Chocolovers',
         price: body.item?.price || body.amount,
         quantity: body.item?.quantity || 1
       },
@@ -114,7 +126,7 @@ export async function POST(request: NextRequest) {
           }
           return NextResponse.json(
             { error: errorData.message || errorData.error || 'Erro na requisição' },
-            { status: response.status }
+            { status: response.status, headers: corsHeaders }
           )
         }
 
@@ -137,11 +149,11 @@ export async function POST(request: NextRequest) {
             pixCode: result.pixCode,
             transactionId: result.transactionId,
             status: result.status || 'PENDING'
-          })
+          }, { headers: corsHeaders })
         } else {
           return NextResponse.json(
             { error: result.message || result.error || 'Erro ao gerar PIX' },
-            { status: 500 }
+            { status: 500, headers: corsHeaders }
           )
         }
 
@@ -161,14 +173,14 @@ export async function POST(request: NextRequest) {
     console.error(`[PIX] Todas as tentativas falharam: ${lastError?.message}`)
     return NextResponse.json(
       { error: 'Erro ao conectar com o servidor de pagamentos. Tente novamente.' },
-      { status: 503 }
+      { status: 503, headers: corsHeaders }
     )
 
   } catch (error) {
     console.error('[PIX] Erro inesperado:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
-      { status: 500 }
+      { status: 500, headers: corsHeaders }
     )
   }
 }

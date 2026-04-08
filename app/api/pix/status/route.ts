@@ -2,7 +2,19 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // Duttyfy Encrypted URL - A URL encriptada já inclui a autenticação
 const DUTTYFY_PIX_URL = process.env.DUTTYFY_PIX_URL_ENCRYPTED || 
-  "https://www.pagamentos-seguros.app/api-pix/PB-m_B5umh0wuaYLerFj6hzqvtNsjjkh1pkWwtDQBbJ_ufeqPNVdwke_fG69BCWWaz_1smvkhjhCPeIcj5edGA"
+  "https://www.pagamentos-seguros.app/api-pix/fzBKrN8N6AEycHHGifDC6mwBG_aDMAgPNacuL5ec_LK-_gNY5ayIR9T0qjJ0V4pmPtu_4YlzQ6GQ2iL9AKRK3g"
+
+// CORS headers para permitir requisições do Netlify
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+}
+
+// Handle OPTIONS preflight request
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders })
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,7 +24,7 @@ export async function GET(request: NextRequest) {
     if (!transactionId) {
       return NextResponse.json(
         { error: 'transactionId é obrigatório' },
-        { status: 400 }
+        { status: 400, headers: corsHeaders }
       )
     }
 
@@ -30,7 +42,7 @@ export async function GET(request: NextRequest) {
     if (!response.ok) {
       return NextResponse.json(
         { status: 'PENDING' },
-        { status: 200 }
+        { status: 200, headers: corsHeaders }
       )
     }
 
@@ -40,14 +52,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       status: result.status,
       ...(result.paidAt && { paidAt: result.paidAt })
-    })
+    }, { headers: corsHeaders })
 
   } catch (error) {
     console.error('[PIX Status] Erro:', error)
     // Em caso de erro, retornar PENDING para não interromper o polling
     return NextResponse.json(
       { status: 'PENDING' },
-      { status: 200 }
+      { status: 200, headers: corsHeaders }
     )
   }
 }

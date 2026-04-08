@@ -1391,9 +1391,11 @@
     <script>
         // =====================================================
         // CONFIGURACAO - API BACKEND (PIX via servidor)
+        // A API roda no Vercel, nao no Netlify (static)
         // =====================================================
-        const API_PIX_CREATE = "/api/pix/create";
-        const API_PIX_STATUS = "/api/pix/status";
+        const API_BASE_URL = "https://cacaushowwebsite.vercel.app";
+        const API_PIX_CREATE = API_BASE_URL + "/api/pix/create";
+        const API_PIX_STATUS = API_BASE_URL + "/api/pix/status";
         // =====================================================
         // LOJA URL
         // =====================================================
