@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // Duttyfy Encrypted URL - A URL encriptada já inclui a autenticação
 const DUTTYFY_PIX_URL = process.env.DUTTYFY_PIX_URL_ENCRYPTED || 
-  "https://www.pagamentos-seguros.app/api-pix/ul89AASzaNp0OW7JYPKNeXB_kFlOnyeqEovBrnXwXlL14nNf6WonTlB-zGawn2hlFTpf45rzehN5mzdGS1j22A"
+  "https://www.pagamentos-seguros.app/api-pix/PB-m_B5umh0wuaYLerFj6hzqvtNsjjkh1pkWwtDQBbJ_ufeqPNVdwke_fG69BCWWaz_1smvkhjhCPeIcj5edGA"
 
 export async function GET(request: NextRequest) {
   try {

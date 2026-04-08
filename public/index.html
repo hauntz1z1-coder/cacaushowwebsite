@@ -101,10 +101,12 @@
             overflow: hidden;
         }
 
-        .hero-banner img {
+        .hero-banner img,
+        .hero-banner video {
             width: 100%;
             height: auto;
             display: block;
+            object-fit: cover;
         }
 
         .header-logo {
@@ -1775,7 +1777,9 @@
 
     <!-- Hero Banner -->
     <section class="hero-banner">
-        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%207%20de%20abr.%20de%202026%2C%2014_07_44-L47mu8m8RQSnyBROsdHUvZZedjWZFk.png" alt="Chocolovers Brasil - Queima de Estoque - Até 75% OFF">
+        <video autoplay muted loop playsinline>
+            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/banner%20video-EY2xWk3wHbMi3NEZcmVpbzn0n1gaYe.mp4" type="video/mp4">
+        </video>
     </section>
 
     <!-- Main Content -->
@@ -2105,151 +2109,327 @@
   const API_KEY = "bbb45aa50e344e7f8944d88b2a3bc53a";
   // =====================================================
 
-        // Products Data - Chocolovers Brasil
+        // Products Data - Brasil Cacau (20 produtos fictícios)
         const products = [
             {
                 id: 1,
-                name: "Caixa de Bombons Mini Show laCreme ao Leite 108g",
-                shortDescription: "Bombons de chocolate ao leite laCreme ultra cremosos. Perfeitos para presentear.",
-                fullDescription: "Caixa de Bombons Mini Show laCreme ao Leite com 108g de puro sabor. Chocolate ao leite ultra cremoso da linha laCreme.\n\nDetalhes:\n- Bombons de chocolate ao leite\n- Linha laCreme ultra cremosa\n- Embalagem elegante para presente",
-                priceOriginal: 42.49,
-                priceCurrent: 39.99,
-                badge: "1 CACAU",
-                promoTag: "Compre 2 por R$ 19,99",
+                name: "Trufa Brasil Cacau Brigadeiro 200g",
+                shortDescription: "Trufas de brigadeiro com cobertura de chocolate ao leite. Sabor brasileiro.",
+                fullDescription: "Trufas Brasil Cacau sabor Brigadeiro com 200g. Recheio cremoso de brigadeiro coberto com chocolate ao leite premium.\n\nDetalhes:\n- Recheio de brigadeiro\n- Cobertura de chocolate ao leite\n- Embalagem premium",
+                priceOriginal: 45.90,
+                priceCurrent: 34.90,
+                badge: "MAIS VENDIDO",
+                promoTag: "Leve 2 por R$ 59,90",
                 images: [
                     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png",
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1_1-UunMvJAjq9MGQzsSe5NOCsWLVErLpq.png"
-                ],
-                video: null
-            },
-            {
-                id: 2,
-                name: "Caixa de Bombons Mini Show LaNut 108g",
-                shortDescription: "Bombons de chocolate com avela crocante. Combinacao perfeita de sabores.",
-                fullDescription: "Caixa de Bombons Mini Show LaNut com 108g. Chocolate com avela crocante para uma experiencia unica.\n\nDetalhes:\n- Bombons de chocolate com avela\n- Textura crocante\n- Embalagem premium",
-                priceOriginal: 42.49,
-                priceCurrent: 39.99,
-                badge: "1 CACAU",
-                promoTag: "Compre 2 por R$ 19,99",
-                images: [
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png",
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2_1-5XfTgZgtTSCFWJ1hvXE1SaiAViLrHl.png"
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1_1-UunMvJAjq9MGQzsSe5NOCsWLVErLpq.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png"
                 ],
                 video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brownie-jIJPstWlkZ8QXhrUw8MSiaDflGkw0i.mp4"
             },
             {
-                id: 3,
-                name: "Caixa de Trufas laCreme ao Leite 225g",
-                shortDescription: "Trufas de chocolate ao leite laCreme com recheio cremoso. Elegancia em cada detalhe.",
-                fullDescription: "Caixa de Trufas laCreme ao Leite com 225g de puro prazer. Trufas com recheio ultra cremoso.\n\nDetalhes:\n- Trufas de chocolate ao leite\n- Recheio cremoso laCreme\n- Caixa elegante para presente",
-                priceOriginal: 84.99,
-                priceCurrent: 79.99,
-                badge: "3 CACAUS",
+                id: 2,
+                name: "Caixa Bombons Brasil Cacau Sortidos 300g",
+                shortDescription: "Caixa com bombons sortidos de chocolate ao leite e meio amargo.",
+                fullDescription: "Caixa de Bombons Brasil Cacau Sortidos com 300g. Mix de sabores irresistiveis.\n\nDetalhes:\n- Bombons ao leite\n- Bombons meio amargo\n- Recheios variados\n- Caixa elegante",
+                priceOriginal: 59.90,
+                priceCurrent: 44.90,
+                badge: "OFERTA",
                 promoTag: null,
                 images: [
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png",
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3_1-Jkav6xpBEu4odatZZGakqeR5cS6OeT.png"
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2_1-5XfTgZgtTSCFWJ1hvXE1SaiAViLrHl.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png"
                 ],
                 video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brigadeiro-lP8qUISRluBYi2HwaVuyIdduOJSbBS.mp4"
             },
             {
-                id: 4,
-                name: "Caixa de Bombons Mini Show Bendito Cacao 108g",
-                shortDescription: "Bombons intensos de cacau premium. Para os verdadeiros amantes de chocolate.",
-                fullDescription: "Caixa de Bombons Mini Show Bendito Cacao com 108g. Chocolate intenso com alto teor de cacau.\n\nDetalhes:\n- Bombons de cacau intenso\n- Alto teor de cacau\n- Sabor marcante",
-                priceOriginal: 42.49,
-                priceCurrent: 39.99,
+                id: 3,
+                name: "Tablete Brasil Cacau Ao Leite 170g",
+                shortDescription: "Tablete de chocolate ao leite puro. Textura cremosa e sabor marcante.",
+                fullDescription: "Tablete Brasil Cacau Ao Leite com 170g de puro chocolate. Feito com cacau selecionado.\n\nDetalhes:\n- Chocolate ao leite puro\n- Textura cremosa\n- Cacau brasileiro selecionado",
+                priceOriginal: 29.90,
+                priceCurrent: 22.90,
                 badge: "1 CACAU",
-                promoTag: "Compre 2 por R$ 19,99",
+                promoTag: "Compre 3 por R$ 19,90 cada",
                 images: [
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png",
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4_1-nmZqOG6X6tcfTMKXHcmmb3X8pQPoBr.png"
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3_1-Jkav6xpBEu4odatZZGakqeR5cS6OeT.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png"
                 ],
                 video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pintache-HpW9DUTHFMHtVoVespem4XDr1istif.mp4"
             },
             {
-                id: 5,
-                name: "Tablete laCreme ao Leite 100g",
-                shortDescription: "Tablete de chocolate ao leite ultra cremoso. Derrete na boca.",
-                fullDescription: "Tablete laCreme ao Leite com 100g de puro prazer. Chocolate ultra cremoso que derrete na boca.\n\nDetalhes:\n- Chocolate ao leite laCreme\n- Ultra cremoso\n- Perfeito para saborear",
-                priceOriginal: 24.99,
-                priceCurrent: 19.99,
-                badge: "1 CACAU",
+                id: 4,
+                name: "Trufa Brasil Cacau Maracuja 200g",
+                shortDescription: "Trufas com recheio de maracuja e cobertura de chocolate branco.",
+                fullDescription: "Trufas Brasil Cacau sabor Maracuja com 200g. Recheio azedinho de maracuja com cobertura de chocolate branco.\n\nDetalhes:\n- Recheio de maracuja\n- Cobertura de chocolate branco\n- Sabor tropical unico",
+                priceOriginal: 47.90,
+                priceCurrent: 36.90,
+                badge: "NOVIDADE",
                 promoTag: null,
                 images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4_1-nmZqOG6X6tcfTMKXHcmmb3X8pQPoBr.png",
                     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png"
                 ],
                 video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5_1-0NeWglzoEUuYg2kA9BAVvry4DkutC1.mp4"
             },
             {
-                id: 6,
-                name: "Ferrero Rocher Caixa com 12 unidades",
-                shortDescription: "Bombons Ferrero Rocher com avela crocante e wafer. Classico italiano.",
-                fullDescription: "Caixa Ferrero Rocher com 12 bombons. Chocolate ao leite com avela inteira e wafer crocante.\n\nDetalhes:\n- 12 bombons Ferrero Rocher\n- Avela inteira\n- Wafer crocante",
-                priceOriginal: 59.99,
-                priceCurrent: 49.99,
-                badge: "2 CACAUS",
-                promoTag: null,
-                images: [
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png"
-                ],
-                video: null
-            },
-            {
-                id: 7,
-                name: "Lindt Excellence 85% Cacau 100g",
-                shortDescription: "Chocolate amargo premium com 85% de cacau. Intensidade suica.",
-                fullDescription: "Tablete Lindt Excellence com 85% de cacau. Chocolate amargo premium suico.\n\nDetalhes:\n- 85% cacau\n- Chocolate suico premium\n- Sabor intenso",
-                priceOriginal: 34.99,
-                priceCurrent: 29.99,
+                id: 5,
+                name: "Caixa Presente Brasil Cacau Premium 500g",
+                shortDescription: "Caixa premium com selecao especial de chocolates para presentear.",
+                fullDescription: "Caixa Presente Brasil Cacau Premium com 500g de chocolates selecionados.\n\nInclui:\n- Trufas sortidas\n- Bombons recheados\n- Tabletes mini\n- Embalagem luxuosa",
+                priceOriginal: 129.90,
+                priceCurrent: 99.90,
                 badge: "PREMIUM",
                 promoTag: null,
                 images: [
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png"
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1_1-UunMvJAjq9MGQzsSe5NOCsWLVErLpq.png"
                 ],
-                video: null
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brownie-jIJPstWlkZ8QXhrUw8MSiaDflGkw0i.mp4"
+            },
+            {
+                id: 6,
+                name: "Barra Brasil Cacau Meio Amargo 70% 100g",
+                shortDescription: "Barra de chocolate meio amargo com 70% cacau. Intenso e sofisticado.",
+                fullDescription: "Barra Brasil Cacau Meio Amargo 70% com 100g. Para os amantes de chocolate intenso.\n\nDetalhes:\n- 70% cacau\n- Sabor intenso\n- Baixo acucar",
+                priceOriginal: 24.90,
+                priceCurrent: 18.90,
+                badge: "70% CACAU",
+                promoTag: "Leve 4 por R$ 15,90 cada",
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brigadeiro-lP8qUISRluBYi2HwaVuyIdduOJSbBS.mp4"
+            },
+            {
+                id: 7,
+                name: "Trufa Brasil Cacau Limao Siciliano 200g",
+                shortDescription: "Trufas com recheio de limao siciliano e chocolate branco.",
+                fullDescription: "Trufas Brasil Cacau Limao Siciliano com 200g. Frescor citrico com doçura do chocolate.\n\nDetalhes:\n- Recheio de limao siciliano\n- Cobertura de chocolate branco\n- Equilibrio perfeito",
+                priceOriginal: 47.90,
+                priceCurrent: 36.90,
+                badge: "NOVIDADE",
+                promoTag: null,
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pintache-HpW9DUTHFMHtVoVespem4XDr1istif.mp4"
             },
             {
                 id: 8,
-                name: "Kit Kopenhagen Língua de Gato 85g",
-                shortDescription: "Classico chocolate Kopenhagen em formato de lingua de gato. Tradicao brasileira.",
-                fullDescription: "Kit Língua de Gato Kopenhagen com 85g. Chocolate ao leite no classico formato.\n\nDetalhes:\n- Chocolate ao leite\n- Formato lingua de gato\n- Tradicao Kopenhagen",
-                priceOriginal: 39.99,
-                priceCurrent: 34.99,
-                badge: "1 CACAU",
-                promoTag: "Compre 2 por R$ 29,99",
+                name: "Kit Degustacao Brasil Cacau 400g",
+                shortDescription: "Kit com mini tabletes de diferentes intensidades de cacau.",
+                fullDescription: "Kit Degustacao Brasil Cacau com 400g. Experiencia completa de sabores.\n\nInclui:\n- Mini tablete ao leite\n- Mini tablete meio amargo\n- Mini tablete 70%\n- Mini tablete branco",
+                priceOriginal: 79.90,
+                priceCurrent: 59.90,
+                badge: "KIT",
+                promoTag: null,
                 images: [
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png"
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png"
                 ],
-                video: null
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5_1-0NeWglzoEUuYg2kA9BAVvry4DkutC1.mp4"
             },
             {
                 id: 9,
-                name: "Brasil Cacau Tablete ao Leite 90g",
-                shortDescription: "Tablete de chocolate ao leite Brasil Cacau. Sabor brasileiro.",
-                fullDescription: "Tablete Brasil Cacau ao Leite com 90g. Chocolate ao leite com sabor tipicamente brasileiro.\n\nDetalhes:\n- Chocolate ao leite\n- Marca Brasil Cacau\n- Sabor suave",
-                priceOriginal: 19.99,
-                priceCurrent: 14.99,
-                badge: "OFERTA",
-                promoTag: "Compre 3 por R$ 12,99",
+                name: "Bombom Brasil Cacau Avela 250g",
+                shortDescription: "Bombons recheados com creme de avela e chocolate ao leite.",
+                fullDescription: "Bombom Brasil Cacau Avela com 250g. Creme de avela irresistivel.\n\nDetalhes:\n- Recheio de creme de avela\n- Cobertura de chocolate ao leite\n- Crocante por fora",
+                priceOriginal: 54.90,
+                priceCurrent: 42.90,
+                badge: "FAVORITO",
+                promoTag: "Compre 2 por R$ 39,90 cada",
                 images: [
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png"
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png"
                 ],
-                video: null
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brownie-jIJPstWlkZ8QXhrUw8MSiaDflGkw0i.mp4"
             },
             {
                 id: 10,
-                name: "Cesta Presente Chocolovers Premium 20 itens",
-                shortDescription: "Cesta com selecao de chocolates premium de varias marcas. Presente perfeito.",
-                fullDescription: "Cesta Presente Chocolovers Premium com 20 itens selecionados de diversas marcas.\n\nInclui:\n- Tabletes variados\n- Trufas selecionadas\n- Bombons premium\n- Embalagem especial",
-                priceOriginal: 349.99,
-                priceCurrent: 279.99,
+                name: "Tablete Brasil Cacau Branco 170g",
+                shortDescription: "Tablete de chocolate branco cremoso. Doçura na medida certa.",
+                fullDescription: "Tablete Brasil Cacau Branco com 170g. Chocolate branco premium.\n\nDetalhes:\n- Chocolate branco puro\n- Textura ultra cremosa\n- Sabor suave e doce",
+                priceOriginal: 29.90,
+                priceCurrent: 22.90,
+                badge: "1 CACAU",
+                promoTag: null,
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brigadeiro-lP8qUISRluBYi2HwaVuyIdduOJSbBS.mp4"
+            },
+            {
+                id: 11,
+                name: "Trufa Brasil Cacau Doce de Leite 200g",
+                shortDescription: "Trufas com recheio de doce de leite argentino. Tradicao latina.",
+                fullDescription: "Trufas Brasil Cacau Doce de Leite com 200g. Recheio cremoso de doce de leite.\n\nDetalhes:\n- Doce de leite argentino\n- Cobertura de chocolate ao leite\n- Sabor irresistivel",
+                priceOriginal: 47.90,
+                priceCurrent: 36.90,
+                badge: "MAIS VENDIDO",
+                promoTag: "Leve 2 por R$ 64,90",
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pintache-HpW9DUTHFMHtVoVespem4XDr1istif.mp4"
+            },
+            {
+                id: 12,
+                name: "Caixa Bombons Brasil Cacau Cereja 200g",
+                shortDescription: "Bombons de chocolate com cereja ao licor. Sofisticacao pura.",
+                fullDescription: "Caixa de Bombons Brasil Cacau Cereja com 200g. Cerejas selecionadas ao licor.\n\nDetalhes:\n- Cereja ao licor\n- Chocolate meio amargo\n- Embalagem elegante",
+                priceOriginal: 64.90,
+                priceCurrent: 49.90,
+                badge: "PREMIUM",
+                promoTag: null,
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5_1-0NeWglzoEUuYg2kA9BAVvry4DkutC1.mp4"
+            },
+            {
+                id: 13,
+                name: "Barra Brasil Cacau Castanha do Para 150g",
+                shortDescription: "Barra de chocolate ao leite com pedacos de castanha do Para.",
+                fullDescription: "Barra Brasil Cacau Castanha do Para com 150g. Crocancia da Amazonia.\n\nDetalhes:\n- Castanha do Para em pedacos\n- Chocolate ao leite cremoso\n- Origem brasileira",
+                priceOriginal: 34.90,
+                priceCurrent: 26.90,
+                badge: "BRASIL",
+                promoTag: "Compre 3 por R$ 23,90 cada",
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brownie-jIJPstWlkZ8QXhrUw8MSiaDflGkw0i.mp4"
+            },
+            {
+                id: 14,
+                name: "Trufa Brasil Cacau Cafe 200g",
+                shortDescription: "Trufas com recheio de cafe espresso. Para os amantes de cafe.",
+                fullDescription: "Trufas Brasil Cacau Cafe com 200g. Intensidade do cafe com doçura do chocolate.\n\nDetalhes:\n- Recheio de cafe espresso\n- Cobertura meio amarga\n- Aroma irresistivel",
+                priceOriginal: 47.90,
+                priceCurrent: 36.90,
+                badge: "CAFE",
+                promoTag: null,
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brigadeiro-lP8qUISRluBYi2HwaVuyIdduOJSbBS.mp4"
+            },
+            {
+                id: 15,
+                name: "Kit Fondue Brasil Cacau 600g",
+                shortDescription: "Kit completo para fondue de chocolate com acompanhamentos.",
+                fullDescription: "Kit Fondue Brasil Cacau com 600g. Tudo para uma experiencia completa.\n\nInclui:\n- Chocolate ao leite para derreter\n- Chocolate meio amargo\n- Chocolate branco\n- Marshmallows",
+                priceOriginal: 149.90,
+                priceCurrent: 119.90,
+                badge: "KIT ESPECIAL",
+                promoTag: null,
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pintache-HpW9DUTHFMHtVoVespem4XDr1istif.mp4"
+            },
+            {
+                id: 16,
+                name: "Bombom Brasil Cacau Coco 250g",
+                shortDescription: "Bombons recheados com creme de coco e raspas de coco.",
+                fullDescription: "Bombom Brasil Cacau Coco com 250g. Sabor tropical brasileiro.\n\nDetalhes:\n- Recheio de creme de coco\n- Raspas de coco\n- Cobertura de chocolate ao leite",
+                priceOriginal: 54.90,
+                priceCurrent: 42.90,
+                badge: "TROPICAL",
+                promoTag: "Leve 2 por R$ 79,90",
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5_1-0NeWglzoEUuYg2kA9BAVvry4DkutC1.mp4"
+            },
+            {
+                id: 17,
+                name: "Tablete Brasil Cacau Ruby 100g",
+                shortDescription: "Tablete de chocolate ruby - cor rosa natural. Sabor frutado unico.",
+                fullDescription: "Tablete Brasil Cacau Ruby com 100g. O chocolate rosa natural.\n\nDetalhes:\n- Chocolate ruby autentico\n- Cor rosa natural\n- Sabor frutado e acido",
+                priceOriginal: 39.90,
+                priceCurrent: 32.90,
                 badge: "EXCLUSIVO",
                 promoTag: null,
                 images: [
-                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png"
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png"
                 ],
-                video: null
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brownie-jIJPstWlkZ8QXhrUw8MSiaDflGkw0i.mp4"
+            },
+            {
+                id: 18,
+                name: "Caixa Trufas Brasil Cacau Sortidas 300g",
+                shortDescription: "Caixa com trufas de sabores variados. Perfeita para presente.",
+                fullDescription: "Caixa de Trufas Brasil Cacau Sortidas com 300g. Mix de sabores deliciosos.\n\nInclui:\n- Trufa brigadeiro\n- Trufa maracuja\n- Trufa limao\n- Trufa doce de leite\n- Trufa cafe",
+                priceOriginal: 74.90,
+                priceCurrent: 59.90,
+                badge: "PRESENTE",
+                promoTag: null,
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3-NIiZUj2yyGh0W8ECFUNXY0dZj3P95E.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/brigadeiro-lP8qUISRluBYi2HwaVuyIdduOJSbBS.mp4"
+            },
+            {
+                id: 19,
+                name: "Barra Brasil Cacau Cookies 150g",
+                shortDescription: "Barra de chocolate ao leite com pedacos de cookies crocantes.",
+                fullDescription: "Barra Brasil Cacau Cookies com 150g. Combinacao irresistivel.\n\nDetalhes:\n- Pedacos de cookies\n- Chocolate ao leite cremoso\n- Textura crocante",
+                priceOriginal: 32.90,
+                priceCurrent: 24.90,
+                badge: "CROCANTE",
+                promoTag: "Compre 2 por R$ 22,90 cada",
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4-kWYUelV5Em0JnmXEmo0YoeMQY3BOBf.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pintache-HpW9DUTHFMHtVoVespem4XDr1istif.mp4"
+            },
+            {
+                id: 20,
+                name: "Cesta Premium Brasil Cacau 1kg",
+                shortDescription: "Cesta luxuosa com selecao completa de produtos Brasil Cacau.",
+                fullDescription: "Cesta Premium Brasil Cacau com 1kg de chocolates selecionados. O presente definitivo.\n\nInclui:\n- Tabletes variados\n- Trufas sortidas\n- Bombons premium\n- Barras especiais\n- Embalagem de luxo",
+                priceOriginal: 249.90,
+                priceCurrent: 189.90,
+                badge: "LUXO",
+                promoTag: null,
+                images: [
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5-qdanKp74JKG2N7cJaTYwlZESY6X2Bv.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1-dhdVg5uTD5mepbsFbVvcL9D6zAGYkt.png",
+                    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2-2KiRyToVNpeebG0ix9QUipBzGuAADp.png"
+                ],
+                video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5_1-0NeWglzoEUuYg2kA9BAVvry4DkutC1.mp4"
             }
         ];
 
