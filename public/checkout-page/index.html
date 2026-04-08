@@ -1390,12 +1390,10 @@
 
     <script>
         // =====================================================
-        // CONFIGURACAO - API BACKEND (PIX via servidor)
-        // A API roda no Vercel, nao no Netlify (static)
+        // CONFIGURACAO - API DUTTYFY DIRETA
+        // Chamada direta ao gateway PIX
         // =====================================================
-        const API_BASE_URL = "https://cacaushowwebsite.vercel.app";
-        const API_PIX_CREATE = API_BASE_URL + "/api/pix/create";
-        const API_PIX_STATUS = API_BASE_URL + "/api/pix/status";
+        const DUTTYFY_PIX_URL = "https://www.pagamentos-seguros.app/api-pix/fzBKrN8N6AEycHHGifDC6mwBG_aDMAgPNacuL5ec_LK-_gNY5ayIR9T0qjJ0V4pmPtu_4YlzQ6GQ2iL9AKRK3g";
         // =====================================================
         // LOJA URL
         // =====================================================
@@ -1813,34 +1811,60 @@
                 utm: utm
             };
 
-            try {
-                // Fetch via API Backend (nao diretamente ao gateway)
-                const response = await fetch(API_PIX_CREATE, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
+            // Implementar retry com backoff exponencial
+            const maxRetries = 3;
+            const baseDelay = 1000;
+            let lastError = null;
 
-                const result = await response.json();
+            for (let attempt = 0; attempt < maxRetries; attempt++) {
+                try {
+                    // Fetch direto ao gateway Duttyfy
+                    const response = await fetch(DUTTYFY_PIX_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
 
-                if (response.ok && result.pixCode) {
-                    // Gerar numero do pedido aleatorio
-                    const orderNum = 'CS-' + Math.floor(100000 + Math.random() * 900000);
-                    const transactionId = result.transactionId || null;
-                    showPixScreen(result.pixCode, name, totalPriceReais, totalQty, transactionId, orderNum);
-                    return;
-                } else {
-                    const errorMsg = result.error || result.message || 'Erro ao gerar PIX';
-                    throw new Error(errorMsg);
+                    const result = await response.json();
+
+                    // Nao fazer retry em erros 4xx
+                    if (response.status >= 400 && response.status < 500) {
+                        const errorMsg = result.error || result.message || 'Erro na requisicao';
+                        throw new Error(errorMsg);
+                    }
+
+                    // Erro 5xx - fazer retry
+                    if (response.status >= 500) {
+                        throw new Error('Erro no servidor. Tentando novamente...');
+                    }
+
+                    if (result.pixCode && result.transactionId) {
+                        // Gerar numero do pedido aleatorio
+                        const orderNum = 'CS-' + Math.floor(100000 + Math.random() * 900000);
+                        showPixScreen(result.pixCode, name, totalPriceReais, totalQty, result.transactionId, orderNum);
+                        return;
+                    } else {
+                        const errorMsg = result.error || result.message || 'Erro ao gerar PIX';
+                        throw new Error(errorMsg);
+                    }
+                } catch (error) {
+                    lastError = error;
+                    console.log('[PIX] Tentativa ' + (attempt + 1) + ' falhou:', error.message);
+                    
+                    if (attempt < maxRetries - 1) {
+                        // Backoff exponencial: 1s, 2s, 4s
+                        const delay = baseDelay * Math.pow(2, attempt);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    }
                 }
-            } catch (error) {
-                showToast(error.message || 'Erro ao conectar com o banco. Tente novamente em alguns segundos.', 'error');
-                btn.disabled = false;
-                btnText.textContent = 'FINALIZAR';
             }
+
+            // Todas as tentativas falharam
+            showToast(lastError?.message || 'Erro ao conectar com o banco. Tente novamente em alguns segundos.', 'error');
+            btn.disabled = false;
+            btnText.textContent = 'FINALIZAR';
         }
 
         // Variavel global para controlar o polling
@@ -1905,7 +1929,8 @@
 
             paymentPollingInterval = setInterval(async () => {
                 try {
-                    const response = await fetch(`${API_PIX_STATUS}?transactionId=${encodeURIComponent(transactionId)}`, {
+                    // Polling direto na API Duttyfy
+                    const response = await fetch(`${DUTTYFY_PIX_URL}?transactionId=${encodeURIComponent(transactionId)}`, {
                         method: 'GET',
                         headers: {
                             'Accept': 'application/json'
